@@ -35,4 +35,13 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    def work_version = "2.4.0"
+    // base dependency, for java usage only:
+    implementation "androidx.work:work-runtime:$work_version"
+    // for Kotlin usage add this line as well:
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    // add this line if you plan to use ListenableWork:
+    implementation 'com.google.guava:guava:30.0-android'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
 }
