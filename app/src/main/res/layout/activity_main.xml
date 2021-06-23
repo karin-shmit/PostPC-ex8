@@ -13,11 +13,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toTopOf="@id/enterCalculation"
+        app:layout_constraintBottom_toTopOf="@id/insertCalculation"
         tools:layout_editor_absoluteY="237dp" />
 
     <EditText
-        android:id="@+id/insertNumber"
+        android:id="@+id/insertCalculation"
         android:layout_width="296dp"
         android:layout_height="66dp"
         android:layout_marginStart="16dp"

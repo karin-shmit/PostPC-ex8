@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class CalcAdapter extends RecyclerView.Adapter<CalcAdapter.ViewHolder> {
         this.calcHolder = holder;
         this.wm = wm;
         this.app = app;
+
     }
 
     @Nonnull
@@ -38,7 +40,7 @@ public class CalcAdapter extends RecyclerView.Adapter<CalcAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CalcAdapter.ViewHolder viewHolder, int position) {
         int pos = viewHolder.getLayoutPosition();
-        CalcItem calc = calcHolder.calcItems.get(pos);
+        CalcItem calc = this.calcHolder.calcItems.get(pos);
         viewHolder.calcDescription.setText(calc.getStatus());
         viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +49,7 @@ public class CalcAdapter extends RecyclerView.Adapter<CalcAdapter.ViewHolder> {
                 CalcItem calc = calcHolder.calcItems.get(pos);
 
                 if (!calc.isFinished()) {
-                    wm.cancelWorkById(UUID.fromString(calc.getCalcId()));
+                    wm.cancelWorkById(UUID.fromString(calc.getWorkId()));
                 }
                 calcHolder.deleteCalc(calc);
                 notifyItemRangeRemoved(pos, 1);
@@ -72,9 +74,8 @@ public class CalcAdapter extends RecyclerView.Adapter<CalcAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder{
         ConstraintLayout calculationRow;
         TextView calcDescription;
-        Button deleteButton;
-        ProgressBar calcProgress;
-        TextView progressPercentage;
+        ImageButton deleteButton;
+        public ProgressBar calcProgress;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -83,30 +84,21 @@ public class CalcAdapter extends RecyclerView.Adapter<CalcAdapter.ViewHolder> {
             this.calcDescription = itemView.findViewById(R.id.calcDescription);
             this.deleteButton = itemView.findViewById(R.id.deleteCalcButton);
             this.calcProgress = itemView.findViewById(R.id.calcProgress);
-            this.progressPercentage = itemView.findViewById(R.id.progressPercentage);
+
 
         }
 
         public void calcComplete(CalcItem calc){
             this.calcDescription.setText(calc.getStatus());
             calcProgress.setVisibility(View.GONE);
-            progressPercentage.setVisibility(View.INVISIBLE);
         }
 
-        public void setCalcProgress(int progress) {
-            if (progress == 0) {
-                progressPercentage.setVisibility(View.VISIBLE);
+        public void setCalcProgressBar(int progress) {
+            if (progress == 0){
+                this.calcProgress.setVisibility(View.VISIBLE);
             }
             calcProgress.setProgress(progress);
         }
 
-        public void setCalcProgressPercentage(int progress) {
-            String strPercentage = Float.toString(progress) + "%";
-            progressPercentage.setText(strPercentage);
-            if (progress >= 99) {
-                calcProgress.setVisibility(View.GONE);
-                progressPercentage.setVisibility(View.INVISIBLE);
-            }
-        }
     }
 }
